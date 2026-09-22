@@ -56,7 +56,7 @@ function simulateReading(siteId: string, sensorType: SensorType): SensorReading 
   const key = `${siteId}:${sensorType}`;
 
   // Get the previous value, or start at the "normal" value
-  let previousValue = currentValues.get(key) ?? config.normalValue;
+  const previousValue = currentValues.get(key) ?? config.normalValue;
 
   // Random walk: add a small random change (-1 to +1, scaled)
   const maxStep = (config.max - config.min) * 0.02; // 2% of range

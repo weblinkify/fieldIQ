@@ -9,7 +9,7 @@ export default function AnalyticsPage() {
       <h2 className="placeholder-title">Advanced Analytics</h2>
       <div className="placeholder-badge">Coming in Phase 3</div>
       <p className="placeholder-description">
-        Deep dive into your historical data. Compare multiple sites, generate compliance reports, 
+        Deep dive into your historical data. Compare multiple sites, generate compliance reports,
         and spot long-term environmental trends.
       </p>
     </div>

@@ -11,7 +11,7 @@ import { cn } from "@/lib/utils";
 import MiniChart from "./MiniChart";
 
 // Map our string icon names to actual React components
-const ICON_MAP: Record<string, any> = {
+const ICON_MAP: Record<string, React.ElementType> = {
   Thermometer,
   Droplets,
   Volume2,

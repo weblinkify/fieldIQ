@@ -20,10 +20,12 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     const savedTheme = localStorage.getItem("fieldiq-theme") as "light" | "dark";
     if (savedTheme) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setTheme(savedTheme);
       document.documentElement.setAttribute("data-theme", savedTheme);
     } else if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
       // Fallback to system preference
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setTheme("dark");
       document.documentElement.setAttribute("data-theme", "dark");
     }
