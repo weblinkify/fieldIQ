@@ -270,23 +270,84 @@ function generateAlerts(sites: Site[]): Alert[] {
 }
 
 /**
- * Get the complete dashboard data.
- * This is the main function the API route calls.
+ * Get the complete dashboard data from the database.
+ * This replaces the hardcoded DEMO_SITES with real DB calls.
  */
-export function getDashboardData(): DashboardData {
-  const sites = DEMO_SITES.map(buildSite);
-  const recentAlerts = generateAlerts(sites);
+export async function getDashboardData() {
+  const { prisma } = await import("@/lib/prisma");
 
-  const onlineDevices = sites.filter(
-    (s) => s.device.status === "online"
-  ).length;
+  const sites = await prisma.site.findMany({
+    include: {
+      devices: {
+        include: {
+          measurements: {
+            orderBy: { timestamp: 'desc' },
+            take: 5, // Get latest 5 (one for each sensor type roughly)
+          }
+        }
+      }
+    }
+  });
+
+  // Calculate stats
+  const totalSites = sites.length;
+  let totalDevices = 0;
+  let onlineDevices = 0;
+
+  // Format to match the old DashboardData interface for frontend compatibility
+  const formattedSites = sites.map((site: any) => {
+    const device = site.devices[0]; // Assuming 1 device per site for simplicity
+
+    if (device) {
+      totalDevices++;
+      if (device.status === 'online') onlineDevices++;
+    }
+
+    // Format current readings
+    const currentReadings = device ? device.measurements.map((m: any) => ({
+      sensorType: m.sensorType as SensorType,
+      value: m.value,
+      unit: m.unit,
+      timestamp: m.timestamp.toISOString(),
+      status: m.status as ReadingStatus,
+    })) : [];
+
+    const alertCount = currentReadings.filter((r: any) => r.status === 'warning' || r.status === 'critical').length;
+
+    return {
+      id: site.id,
+      name: site.name,
+      location: site.location,
+      description: site.description || "",
+      device: device ? {
+        id: device.id,
+        name: device.name,
+        status: device.status as any,
+        lastSeen: device.lastSeen.toISOString(),
+        batteryLevel: device.batteryLevel,
+        firmwareVersion: device.firmwareVersion,
+      } : {
+        id: "none",
+        name: "No Device",
+        status: "offline" as any,
+        lastSeen: new Date().toISOString(),
+        batteryLevel: 0,
+        firmwareVersion: "0.0.0"
+      },
+      currentReadings,
+      alertCount,
+      createdAt: site.createdAt.toISOString()
+    };
+  });
+
+  const recentAlerts = generateAlerts(formattedSites);
 
   return {
-    sites,
+    sites: formattedSites,
     recentAlerts,
     stats: {
-      totalSites: sites.length,
-      totalDevices: sites.length, // 1 device per site for now
+      totalSites,
+      totalDevices,
       onlineDevices,
       activeAlerts: recentAlerts.length,
     },
@@ -295,8 +356,56 @@ export function getDashboardData(): DashboardData {
 
 /**
  * Get readings for a specific site.
- * Useful for the site detail page (Phase 2).
  */
-export function getSiteReadings(siteId: string): SensorReading[] {
-  return generateSiteReadings(siteId);
+export async function getSiteReadings(siteId: string): Promise<SensorReading[]> {
+  const { prisma } = await import("@/lib/prisma");
+  const site = await prisma.site.findUnique({
+    where: { id: siteId },
+    include: {
+      devices: {
+        include: {
+          measurements: {
+            orderBy: { timestamp: 'desc' },
+            take: 5
+          }
+        }
+      }
+    }
+  });
+
+  if (!site || !site.devices[0]) return [];
+
+  return site.devices[0].measurements.map((m: any) => ({
+    sensorType: m.sensorType as SensorType,
+    value: m.value,
+    unit: m.unit,
+    timestamp: m.timestamp.toISOString(),
+    status: m.status as ReadingStatus,
+  }));
 }
+
+/**
+ * Generate readings and save them to the DB.
+ */
+export async function simulateAndSaveReadings() {
+  const { prisma } = await import("@/lib/prisma");
+  const devices = await prisma.device.findMany();
+  const sensorTypes: SensorType[] = ["temperature", "humidity", "noise", "air_quality", "battery"];
+
+  for (const device of devices) {
+    for (const type of sensorTypes) {
+      const reading = simulateReading(`site-db`, type); // use a generic key for random walk tracking
+      await prisma.sensorMeasurement.create({
+        data: {
+          deviceId: device.id,
+          sensorType: reading.sensorType,
+          value: reading.value,
+          unit: reading.unit,
+          status: reading.status,
+          timestamp: new Date(reading.timestamp),
+        }
+      });
+    }
+  }
+}
+

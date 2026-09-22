@@ -20,13 +20,14 @@ import type { ApiResponse, DashboardData } from "@/lib/types";
 
 export async function GET() {
   try {
-    const data = getDashboardData();
+    const data = await getDashboardData();
 
     const response: ApiResponse<DashboardData> = {
       success: true,
       data,
       timestamp: new Date().toISOString(),
     };
+
 
     return NextResponse.json(response);
   } catch (error) {

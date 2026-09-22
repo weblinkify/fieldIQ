@@ -1,0 +1,44 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Site {
+  id          String   @id @default(cuid())
+  name        String
+  location    String
+  description String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  devices     Device[]
+}
+
+model Device {
+  id              String   @id @default(cuid())
+  name            String
+  status          String   @default("offline")
+  lastSeen        DateTime @default(now())
+  batteryLevel    Float    @default(100)
+  firmwareVersion String   @default("1.0.0")
+  siteId          String?
+  site            Site?    @relation(fields: [siteId], references: [id])
+  measurements    SensorMeasurement[]
+}
+
+model SensorMeasurement {
+  id         String   @id @default(cuid())
+  sensorType String   // e.g., "temperature", "humidity"
+  value      Float
+  unit       String
+  status     String   // "ok", "warning", "critical"
+  timestamp  DateTime @default(now())
+  
+  deviceId   String
+  device     Device   @relation(fields: [deviceId], references: [id])
+  
+  @@index([deviceId, sensorType, timestamp(sort: Desc)])
+}
