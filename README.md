@@ -1,5 +1,11 @@
 # FieldIQ
 
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-FieldIQ-brightgreen)](https://field-iq-theta.vercel.app/)
+
+## 📊 Dashboard
+
+![FieldIQ Dashboard](public/dashboard.png)
+
 **FieldIQ** is a modern environmental and site monitoring platform that connects physical sensors with cloud software.
 
 The goal is to help people monitor real-world environments through live sensor data, dashboards, alerts, analytics, and eventually AI-powered insights.
