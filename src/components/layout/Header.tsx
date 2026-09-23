@@ -169,12 +169,18 @@ export default function Header({
                 width: 390,
                 maxWidth: "calc(100vw - 24px)",
                 borderRadius: 14,
-                border: "1px solid var(--color-border)",
-                backgroundColor: "rgb(255, 255, 255)",
+                border:
+                  theme === "light"
+                    ? "1px solid #e4e4e7"
+                    : "1px solid #27272a",
+                backgroundColor:
+                  theme === "light" ? "#ffffff" : "#09090b",
                 boxShadow:
-                  "0 16px 40px rgba(0, 0, 0, 0.14)",
+                  theme === "light"
+                    ? "0 16px 40px rgba(0, 0, 0, 0.12)"
+                    : "0 16px 40px rgba(0, 0, 0, 0.45)",
                 overflow: "hidden",
-                zIndex: 100,
+                zIndex: 1000,
               }}
             >
               {/* Popover header */}
@@ -185,7 +191,9 @@ export default function Header({
                   justifyContent: "space-between",
                   padding: "14px 16px",
                   borderBottom:
-                    "1px solid var(--color-border)",
+                    theme === "light"
+                      ? "1px solid #e4e4e7"
+                      : "1px solid #27272a",
                 }}
               >
                 <div>
@@ -193,7 +201,8 @@ export default function Header({
                     style={{
                       fontSize: 14,
                       fontWeight: 700,
-                      color: "var(--color-text)",
+                      color:
+                        theme === "light" ? "#18181b" : "#f4f4f5",
                     }}
                   >
                     Notifications
@@ -203,7 +212,8 @@ export default function Header({
                     style={{
                       marginTop: 2,
                       fontSize: 12,
-                      color: "var(--color-text-muted)",
+                      color:
+                        theme === "light" ? "#71717a" : "#a1a1aa",
                     }}
                   >
                     {unreadCount > 0
@@ -223,7 +233,8 @@ export default function Header({
                       gap: 5,
                       border: 0,
                       background: "transparent",
-                      color: "var(--color-primary)",
+                      color:
+                        theme === "light" ? "#4f46e5" : "#818cf8",
                       fontSize: 12,
                       fontWeight: 600,
                       cursor: "pointer",
@@ -244,8 +255,7 @@ export default function Header({
               >
                 {mockAlerts.map((alert) => {
                   const isRead = readAlerts.includes(alert.id);
-                  const isCritical =
-                    alert.severity === "critical";
+                  const isCritical = alert.severity === "critical";
 
                   return (
                     <button
@@ -258,12 +268,20 @@ export default function Header({
                         padding: "14px 16px",
                         border: 0,
                         borderBottom:
-                          "1px solid var(--color-border)",
+                          theme === "light"
+                            ? "1px solid #e4e4e7"
+                            : "1px solid #27272a",
                         backgroundColor: isRead
-                          ? "transparent"
+                          ? theme === "light"
+                            ? "#ffffff"
+                            : "#09090b"
                           : isCritical
-                            ? "rgba(239, 68, 68, 0.045)"
-                            : "rgba(245, 158, 11, 0.045)",
+                            ? theme === "light"
+                              ? "#fef2f2"
+                              : "rgba(127, 29, 29, 0.18)"
+                            : theme === "light"
+                              ? "#fffbeb"
+                              : "rgba(120, 53, 15, 0.18)",
                         textAlign: "left",
                         cursor: "pointer",
                       }}
@@ -285,8 +303,12 @@ export default function Header({
                             height: 32,
                             borderRadius: 9,
                             backgroundColor: isCritical
-                              ? "rgba(239, 68, 68, 0.1)"
-                              : "rgba(245, 158, 11, 0.12)",
+                              ? theme === "light"
+                                ? "#fee2e2"
+                                : "rgba(239, 68, 68, 0.15)"
+                              : theme === "light"
+                                ? "#fef3c7"
+                                : "rgba(245, 158, 11, 0.15)",
                             color: isCritical
                               ? "#ef4444"
                               : "#f59e0b",
@@ -332,7 +354,9 @@ export default function Header({
                                   height: 6,
                                   borderRadius: "50%",
                                   backgroundColor:
-                                    "var(--color-primary)",
+                                    theme === "light"
+                                      ? "#4f46e5"
+                                      : "#818cf8",
                                 }}
                               />
                             )}
@@ -344,7 +368,10 @@ export default function Header({
                               fontSize: 12,
                               lineHeight: 1.45,
                               fontWeight: 600,
-                              color: "var(--color-text)",
+                              color:
+                                theme === "light"
+                                  ? "#18181b"
+                                  : "#f4f4f5",
                             }}
                           >
                             {alert.message}
@@ -359,7 +386,10 @@ export default function Header({
                               gap: 8,
                               marginTop: 8,
                               fontSize: 10,
-                              color: "var(--color-text-muted)",
+                              color:
+                                theme === "light"
+                                  ? "#52525b"
+                                  : "#a1a1aa",
                             }}
                           >
                             <span
@@ -369,26 +399,40 @@ export default function Header({
                                 gap: 4,
                               }}
                             >
-                              {alert.sensorType ===
-                                "temperature" ? (
+                              {alert.sensorType === "temperature" ? (
                                 <Thermometer size={12} />
                               ) : (
                                 <Wind size={12} />
                               )}
 
-                              {alert.sensorType ===
-                                "temperature"
+                              {alert.sensorType === "temperature"
                                 ? "Temperature"
                                 : "CO₂"}
                             </span>
 
-                            <span>•</span>
-
-                            <span>
-                              Reading: {alert.reading}
+                            <span
+                              style={{
+                                color:
+                                  theme === "light"
+                                    ? "#d4d4d8"
+                                    : "#52525b",
+                              }}
+                            >
+                              •
                             </span>
 
-                            <span>•</span>
+                            <span>Reading: {alert.reading}</span>
+
+                            <span
+                              style={{
+                                color:
+                                  theme === "light"
+                                    ? "#d4d4d8"
+                                    : "#52525b",
+                              }}
+                            >
+                              •
+                            </span>
 
                             <span>{alert.site}</span>
                           </div>
@@ -398,7 +442,10 @@ export default function Header({
                             style={{
                               marginTop: 5,
                               fontSize: 10,
-                              color: "var(--color-text-muted)",
+                              color:
+                                theme === "light"
+                                  ? "#71717a"
+                                  : "#71717a",
                             }}
                           >
                             {alert.time} · {alert.date}
@@ -425,8 +472,10 @@ export default function Header({
                   width: "100%",
                   padding: "12px 16px",
                   border: 0,
-                  background: "transparent",
-                  color: "var(--color-primary)",
+                  backgroundColor:
+                    theme === "light" ? "#ffffff" : "#09090b",
+                  color:
+                    theme === "light" ? "#4f46e5" : "#818cf8",
                   fontSize: 12,
                   fontWeight: 600,
                   cursor: "pointer",
