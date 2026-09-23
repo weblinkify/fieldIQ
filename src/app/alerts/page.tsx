@@ -346,11 +346,14 @@ export default function AlertsPage() {
                 <TableCell>
                   <div className="max-w-md">
                     <div
-                      className={
-                        isResolved
-                          ? "font-medium text-zinc-500"
-                          : "font-medium text-zinc-900 dark:text-zinc-100"
-                      }
+                      style={{
+                        color: isResolved
+                          ? "var(--text-secondary)"
+                          : "var(--text-primary)",
+                        fontWeight: 500,
+                        fontSize: 13,
+                        lineHeight: 1.4,
+                      }}
                     >
                       {alert.message}
                     </div>
