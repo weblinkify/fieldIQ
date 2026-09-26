@@ -3,7 +3,7 @@ import { ChevronRight } from "lucide-react";
 export default function BillingSettings() {
   return (
     <div className="space-y-3">
-      <div className="rounded-lg border border-[var(--border-primary)] bg-[var(--bg-secondary)] p-4">
+      <div className="rounded-lg border border-[var(--border-color)] bg-[var(--bg-secondary)] p-4">
         <div className="flex items-start justify-between gap-4">
           <div>
             <div className="text-xs font-medium uppercase tracking-wide text-[var(--text-tertiary)]">
@@ -27,7 +27,7 @@ export default function BillingSettings() {
 
       <button
         type="button"
-        className="inline-flex h-8 items-center justify-center gap-1.5 rounded-md border border-[var(--border-primary)] bg-[var(--bg-tertiary)] px-2.5 text-xs font-medium text-[var(--text-secondary)] transition-colors hover:bg-[var(--bg-primary)] hover:text-[var(--text-primary)]"
+        className="inline-flex h-8 items-center justify-center gap-1.5 rounded-md border border-[var(--border-color)] bg-[var(--bg-tertiary)] px-2.5 text-xs font-medium text-[var(--text-secondary)] transition-colors hover:bg-[var(--bg-primary)] hover:text-[var(--text-primary)]"
       >
         Open Billing
         <ChevronRight size={13} />
