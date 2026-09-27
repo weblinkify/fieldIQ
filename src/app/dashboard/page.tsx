@@ -1,10 +1,3 @@
-/**
- * FieldIQ — Dashboard Page
- *
- * This is the main view of our application.
- * It fetches data from our API and renders the overview cards,
- * sensor grids, and site summaries.
- */
 "use client";
 
 import { useState, useEffect } from "react";

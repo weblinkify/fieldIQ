@@ -84,7 +84,6 @@ export default function AlertsPage() {
     return () => clearInterval(interval);
   }, []);
 
-  // Close action menu when clicking outside.
   useEffect(() => {
     const handleClickOutside = () => {
       setOpenMenu(null);
@@ -98,8 +97,6 @@ export default function AlertsPage() {
       document.removeEventListener("click", handleClickOutside);
     };
   }, [openMenu]);
-
-  // const alerts = data?.recentAlerts ?? [];
 
   const mockAlerts: Alert[] = [
     {
