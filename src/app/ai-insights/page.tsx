@@ -106,24 +106,15 @@ export default function AIInsightsPage() {
   };
 
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
     fetchData();
 
     const interval = setInterval(() => {
-      // eslint-disable-next-line react-hooks/set-state-in-effect
       fetchData();
     }, 5000);
 
     return () => clearInterval(interval);
   }, []);
 
-  /*
-   * Keep the dashboard data available so this page follows
-   * the same data-refresh pattern as the Devices page.
-   *
-   * The current insights are demo/generated insights, so they
-   * don't require the API data yet.
-   */
   const dashboardSites = data?.sites ?? [];
 
   const generatedInsights = useMemo(() => {
