@@ -7,7 +7,7 @@ export const mockAlerts: Alert[] = [
     siteName: "Helsinki Data Center",
     severity: "critical",
     message:
-      "Temperature exceeded critical threshold in Server Room",
+      "Temperature exceeded critical",
     sensorType: "temperature",
     value: 31.8,
     threshold: 30,
@@ -23,7 +23,7 @@ export const mockAlerts: Alert[] = [
     siteName: "Helsinki Office",
     severity: "warning",
     message:
-      "CO2 level is above recommended range in Conference Room A",
+      "CO2 level is above recommended range",
     sensorType: "noise",
     value: 1248,
     threshold: 1000,
