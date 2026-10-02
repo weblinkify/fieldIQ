@@ -16,7 +16,6 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    // Suppress hydration warning is needed for theme providers that change attributes
     <html lang="en" suppressHydrationWarning>
       <body className={inter.className}>
         <AppLayout>{children}</AppLayout>
