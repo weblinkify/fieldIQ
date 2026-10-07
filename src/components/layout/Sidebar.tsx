@@ -1,17 +1,3 @@
-/**
- * FieldIQ — Sidebar Navigation Component
- *
- * LEARNING CONCEPT: "Client Component"
- * Notice the "use client" at the top. This tells Next.js that this
- * component needs to run in the BROWSER (not on the server).
- * We need this because we use:
- *   - usePathname() → reads the current URL
- *   - onClick handlers → responds to user clicks
- *   - State management → tracks if sidebar is open/closed
- *
- * Components that just display data can be "server components" (the default).
- * Components that need interactivity must be "client components".
- */
 "use client";
 
 import Link from "next/link";
@@ -64,20 +50,16 @@ interface SidebarProps {
 }
 
 export default function Sidebar({ isOpen, onClose, alertCount = 0 }: SidebarProps) {
-  // usePathname() gives us the current URL path (e.g., "/dashboard")
-  // We use it to highlight the active navigation link
   const pathname = usePathname();
 
   return (
     <>
-      {/* Dark overlay behind sidebar on mobile */}
       <div
         className={`sidebar-overlay ${isOpen ? "visible" : ""}`}
         onClick={onClose}
       />
 
       <aside className={`sidebar ${isOpen ? "open" : ""}`}>
-        {/* Logo */}
         <div className="sidebar-logo">
           <div className="sidebar-logo-icon">
             <Zap size={20} />
