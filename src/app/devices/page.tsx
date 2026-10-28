@@ -64,7 +64,6 @@ export default function DevicesPage() {
     fetchData();
 
     const interval = setInterval(() => {
-      // eslint-disable-next-line react-hooks/set-state-in-effect
       fetchData();
     }, 5000);
 
