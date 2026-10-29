@@ -5,7 +5,6 @@ import {
   CreditCard,
   KeyRound,
   Server,
-  Settings,
   User,
 } from "lucide-react";
 

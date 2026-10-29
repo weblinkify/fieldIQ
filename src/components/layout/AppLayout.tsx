@@ -48,7 +48,6 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
           theme={theme} 
           onToggleTheme={toggleTheme} 
           onToggleSidebar={toggleSidebar}
-          alertCount={2}
         />
         <div className="page-content animate-in">
           {children}

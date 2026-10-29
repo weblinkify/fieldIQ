@@ -292,11 +292,3 @@ export function getDashboardData(): DashboardData {
     },
   };
 }
-
-/**
- * Get readings for a specific site.
- * Useful for the site detail page (Phase 2).
- */
-export function getSiteReadings(siteId: string): SensorReading[] {
-  return generateSiteReadings(siteId);
-}

@@ -75,9 +75,3 @@ export const SENSOR_CONFIGS: Record<string, SensorConfig> = {
     higherIsBad: false, // Lower battery = worse
   },
 };
-
-/**
- * Get all sensor configs as an array.
- * Useful for looping: SENSOR_LIST.map(sensor => ...)
- */
-export const SENSOR_LIST: SensorConfig[] = Object.values(SENSOR_CONFIGS);

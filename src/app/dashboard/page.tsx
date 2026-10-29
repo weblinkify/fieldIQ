@@ -25,7 +25,7 @@ export default function DashboardPage() {
         } else {
           setError(result.error || "Failed to fetch data");
         }
-      } catch (err) {
+      } catch {
         setError("Network error fetching dashboard data");
       } finally {
         setIsLoading(false);
@@ -44,7 +44,7 @@ export default function DashboardPage() {
           if (result.success) {
             historyData[type] = result.data;
           }
-        } catch (err) {
+        } catch {
           console.error(`Failed to fetch history for ${type}`);
         }
       }

@@ -26,7 +26,6 @@ interface HeaderProps {
   theme: "light" | "dark";
   onToggleTheme: () => void;
   onToggleSidebar: () => void;
-  alertCount?: number;
 }
 
 interface MockAlert {
@@ -70,7 +69,6 @@ export default function Header({
   theme,
   onToggleTheme,
   onToggleSidebar,
-  alertCount = mockAlerts.length,
 }: HeaderProps) {
   const [notificationsOpen, setNotificationsOpen] = useState(false);
   const [readAlerts, setReadAlerts] = useState<string[]>([]);

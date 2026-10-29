@@ -32,18 +32,6 @@ export function timeAgo(dateString: string): string {
 }
 
 /**
- * Format a timestamp for display in charts.
- * Shows time like "10:30" or "Sep 22" depending on the range.
- */
-export function formatChartTime(dateString: string, showDate: boolean = false): string {
-  const date = new Date(dateString);
-  if (showDate) {
-    return date.toLocaleDateString("en-US", { month: "short", day: "numeric" });
-  }
-  return date.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit", hour12: false });
-}
-
-/**
  * Combine CSS class names, filtering out falsy values.
  * This lets you conditionally add classes:
  *
